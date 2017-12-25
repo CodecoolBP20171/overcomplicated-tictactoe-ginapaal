@@ -48,8 +48,7 @@ public class GameController {
 
     @GetMapping(value = "/game-move")
     public String gameMove(@ModelAttribute("player") Player player, @ModelAttribute("move") int move) {
-        tictactoeGame.collectMoves(move);
-        tictactoeGame.checkWin();
+        tictactoeGame.move(move);
         System.out.println("Player moved " + move);
         return "redirect:/game";
     }

@@ -10,6 +10,7 @@ import java.util.List;
 public class TictactoeGame {
 
     private boolean won;
+    private boolean validMove = true;
     private List<Integer> moveList = new ArrayList<>();
 
     public boolean isWon() {
@@ -18,6 +19,14 @@ public class TictactoeGame {
 
     public void setWon(boolean won) {
         this.won = won;
+    }
+
+    public boolean isValidMove() {
+        return validMove;
+    }
+
+    public void setValidMove(boolean validMove) {
+        this.validMove = validMove;
     }
 
     public boolean checkWin() {
@@ -42,8 +51,22 @@ public class TictactoeGame {
         return won;
     }
 
-    public void collectMoves(int move) {
-        moveList.add(move);
-        System.out.println(moveList);
+    public void move(int move) {
+        if(checkIfMoveIsValid(move)) {
+            moveList.add(move);
+            System.out.println(moveList);
+            checkWin();
+        } else {
+            System.out.println("move not valid");
+        }
+    }
+
+    public boolean checkIfMoveIsValid(int move) {
+        if (moveList.contains(move)) {
+            setValidMove(false);
+            return validMove;
+        }
+        setValidMove(true);
+        return validMove;
     }
 }

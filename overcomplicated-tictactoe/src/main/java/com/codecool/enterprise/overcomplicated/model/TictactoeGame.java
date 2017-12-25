@@ -29,6 +29,14 @@ public class TictactoeGame {
         this.validMove = validMove;
     }
 
+    public List<Integer> getMoveList() {
+        return moveList;
+    }
+
+    public void setMoveList(List<Integer> moveList) {
+        this.moveList = moveList;
+    }
+
     public boolean checkWin() {
         List<Integer> case1 = Arrays.asList(0,1,2); //row 1
         List<Integer> case2 = Arrays.asList(3,4,5); //row 2
@@ -54,7 +62,6 @@ public class TictactoeGame {
     public void move(int move) {
         if(checkIfMoveIsValid(move)) {
             moveList.add(move);
-            System.out.println(moveList);
             checkWin();
         } else {
             System.out.println("move not valid");

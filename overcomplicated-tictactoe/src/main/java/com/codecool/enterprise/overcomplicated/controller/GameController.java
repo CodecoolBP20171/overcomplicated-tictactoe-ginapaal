@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @SessionAttributes({"player", "game"})
 public class GameController {
@@ -41,8 +43,11 @@ public class GameController {
 
     @GetMapping(value = "/game")
     public String gameView(@ModelAttribute("player") Player player, Model model) {
+        List<Integer> moveList = tictactoeGame.getMoveList();
+        System.out.println(moveList);
         model.addAttribute("funfact", "&quot;Chuck Norris knows the last digit of pi.&quot;");
         model.addAttribute("comic_uri", "https://imgs.xkcd.com/comics/bad_code.png");
+        model.addAttribute("moveList", moveList);
         return "game";
     }
 

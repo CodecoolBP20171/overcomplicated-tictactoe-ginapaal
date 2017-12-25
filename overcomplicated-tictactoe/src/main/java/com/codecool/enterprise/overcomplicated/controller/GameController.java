@@ -43,8 +43,8 @@ public class GameController {
 
     @GetMapping(value = "/game")
     public String gameView(@ModelAttribute("player") Player player, Model model) {
-        List<Integer> moveList = tictactoeGame.getMoveList();
-        System.out.println(moveList);
+        List<Integer> moveList = tictactoeGame.getPlayerMoveList();
+        List<Integer> computerMoves = tictactoeGame.getComputerMoveList();
         model.addAttribute("funfact", "&quot;Chuck Norris knows the last digit of pi.&quot;");
         model.addAttribute("comic_uri", "https://imgs.xkcd.com/comics/bad_code.png");
         model.addAttribute("moveList", moveList);
@@ -53,8 +53,13 @@ public class GameController {
 
     @GetMapping(value = "/game-move")
     public String gameMove(@ModelAttribute("player") Player player, @ModelAttribute("move") int move) {
+        int counter = tictactoeGame.getMoveCounter();
         tictactoeGame.move(move);
-        System.out.println("Player moved " + move);
+        if (counter%2==1) {
+            System.out.println(""+ player.getUserName() + " moved " + move);
+        } else {
+            System.out.println("Computer moved " + move);
+        }
         return "redirect:/game";
     }
 }

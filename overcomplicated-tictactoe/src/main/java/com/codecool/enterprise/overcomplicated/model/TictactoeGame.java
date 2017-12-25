@@ -1,5 +1,6 @@
 package com.codecool.enterprise.overcomplicated.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -9,9 +10,19 @@ import java.util.List;
 @Component
 public class TictactoeGame {
 
+    @Autowired
+    private Player player;
+
     private boolean won;
+    private int moveCounter = 1;
     private boolean validMove = true;
-    private List<Integer> moveList = new ArrayList<>();
+    private String winner;
+    private List<Integer> playerMoveList = new ArrayList<>();
+    private List<Integer> computerMoveList = new ArrayList<>();
+
+    public List<Integer> getComputerMoveList() {
+        return computerMoveList;
+    }
 
     public boolean isWon() {
         return won;
@@ -29,12 +40,24 @@ public class TictactoeGame {
         this.validMove = validMove;
     }
 
-    public List<Integer> getMoveList() {
-        return moveList;
+    public List<Integer> getPlayerMoveList() {
+        return playerMoveList;
     }
 
-    public void setMoveList(List<Integer> moveList) {
-        this.moveList = moveList;
+    public String getWinner() {
+        return winner;
+    }
+
+    public void setWinner(String winner) {
+        this.winner = winner;
+    }
+
+    public int getMoveCounter() {
+        return moveCounter;
+    }
+
+    public void setMoveCounter(int moveCounter) {
+        this.moveCounter = moveCounter;
     }
 
     public boolean checkWin() {
@@ -47,33 +70,57 @@ public class TictactoeGame {
         List<Integer> case7 = Arrays.asList(1,4,7); //column 2
         List<Integer> case8 = Arrays.asList(2,5,8); //column 3
 
-        if (moveList.containsAll(case1) || moveList.containsAll(case2) ||
-                moveList.containsAll(case3) || moveList.containsAll(case4) ||
-                moveList.containsAll(case5) || moveList.containsAll(case6) ||
-                moveList.containsAll(case7) || moveList.containsAll(case8)) {
+        if (playerMoveList.containsAll(case1) || playerMoveList.containsAll(case2) ||
+                playerMoveList.containsAll(case3) || playerMoveList.containsAll(case4) ||
+                playerMoveList.containsAll(case5) || playerMoveList.containsAll(case6) ||
+                playerMoveList.containsAll(case7) || playerMoveList.containsAll(case8)) {
             setWon(true);
+            setWinner(player.getUserName());
             System.out.println("Game won by player");
-            moveList.clear();
+            clearLists();
             return won;
+        } else if (computerMoveList.containsAll(case1) || computerMoveList.containsAll(case2) ||
+                computerMoveList.containsAll(case3) || computerMoveList.containsAll(case4) ||
+                computerMoveList.containsAll(case5) || computerMoveList.containsAll(case6) ||
+                computerMoveList.containsAll(case7) || computerMoveList.containsAll(case8)) {
+            setWon(true);
+            setWinner("Computer");
+            System.out.println("Game won by computer");
+            clearLists();
         }
         return won;
     }
 
     public void move(int move) {
         if(checkIfMoveIsValid(move)) {
-            moveList.add(move);
-            checkWin();
+            if(moveCounter % 2 == 1) {
+                doTheMove(playerMoveList, move);
+            } else {
+                doTheMove(computerMoveList, move);
+            }
+
         } else {
             System.out.println("move not valid");
         }
     }
 
     public boolean checkIfMoveIsValid(int move) {
-        if (moveList.contains(move)) {
+        if (playerMoveList.contains(move) || computerMoveList.contains(move)) {
             setValidMove(false);
             return validMove;
         }
         setValidMove(true);
         return validMove;
+    }
+
+    public void clearLists() {
+        playerMoveList.clear();
+        computerMoveList.clear();
+    }
+
+    public void doTheMove(List<Integer> listOfMove, int move) {
+        listOfMove.add(move);
+        checkWin();
+        moveCounter++;
     }
 }

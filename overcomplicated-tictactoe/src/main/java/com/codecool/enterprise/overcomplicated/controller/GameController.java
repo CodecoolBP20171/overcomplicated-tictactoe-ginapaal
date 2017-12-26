@@ -49,7 +49,6 @@ public class GameController {
     public String gameView(@ModelAttribute("player") Player player, Model model) {
         List<Integer> moveList = tictactoeGame.getPlayerMoveList();
         List<Integer> computerMoves = tictactoeGame.getComputerMoveList();
-        model.addAttribute("funfact", "&quot;Chuck Norris knows the last digit of pi.&quot;");
         model.addAttribute("comic_uri", "https://imgs.xkcd.com/comics/bad_code.png");
         model.addAttribute("moveList", moveList);
         model.addAttribute("computerMoves", computerMoves);
@@ -68,16 +67,16 @@ public class GameController {
     }
 
     @ModelAttribute("funfact")
-    public String getFunfact() {
+    public String funFact() {
         try {
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<String> response =
-                    restTemplate.getForEntity("http://localhost:60000/funfact", String.class);
+            ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:60000/funfact", String.class);
             JacksonJsonParser jacksonJsonParser = new JacksonJsonParser();
             return (String) jacksonJsonParser.parseMap(response.getBody()).get("funfact");
         } catch (ResourceAccessException e) {
-            System.out.println("FunFact Service is unavailable: " + e);
-            return "Chuck Norris knows the last digit of pi.";
+            System.out.println("Exception catched, " + e);
+            return "It's a fun fact, isn't it?";
         }
     }
+    
 }

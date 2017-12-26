@@ -3,9 +3,13 @@ package com.codecool.enterprise.overcomplicated.controller;
 import com.codecool.enterprise.overcomplicated.model.Player;
 import com.codecool.enterprise.overcomplicated.model.TictactoeGame;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JacksonJsonParser;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -61,5 +65,19 @@ public class GameController {
 //        System.out.println(moveList);
 //        System.out.println(computerMoves);
         return "redirect:/game";
+    }
+
+    @ModelAttribute("funfact")
+    public String getFunfact() {
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> response =
+                    restTemplate.getForEntity("http://localhost:60000/funfact", String.class);
+            JacksonJsonParser jacksonJsonParser = new JacksonJsonParser();
+            return (String) jacksonJsonParser.parseMap(response.getBody()).get("funfact");
+        } catch (ResourceAccessException e) {
+            System.out.println("FunFact Service is unavailable: " + e);
+            return "Chuck Norris knows the last digit of pi.";
+        }
     }
 }

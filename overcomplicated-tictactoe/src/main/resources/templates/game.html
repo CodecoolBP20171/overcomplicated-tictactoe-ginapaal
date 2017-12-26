@@ -53,37 +53,62 @@
             <div class="container-fluid game-container">
                 <div class="row">
                     <div class="col-xs-4">
-                        <a href="/game-move?move=0" class="btn btn-default square"><i class="fa fa-circle-o"
-                                                                                      aria-hidden="true"></i></a>
+                        <a href="/game-move?move=0" class="btn btn-default square">
+                            <i th:if="${#lists.contains(moveList, 0)}" class="fa fa-circle-o" aria-hidden="true"></i>
+                            <i th:if="${#lists.contains(computerMoves, 0)}" class="fa fa-times" aria-hidden="true"></i>
+                        </a>
                     </div>
                     <div class="col-xs-4">
-                        <a href="/game-move?move=1" class="btn btn-default square"></a>
+                        <a href="/game-move?move=1" class="btn btn-default square">
+                            <i th:if="${#lists.contains(moveList, 1)}" class="fa fa-circle-o" aria-hidden="true"></i>
+                            <i th:if="${#lists.contains(computerMoves, 1)}" class="fa fa-times" aria-hidden="true"></i>
+                        </a>
                     </div>
                     <div class="col-xs-4">
-                        <a href="/game-move?move=2" class="btn btn-default square"><i class="fa fa-times"
-                                                                                      aria-hidden="true"></i></a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <a href="/game-move?move=3" class="btn btn-default square">&nbsp;</a>
-                    </div>
-                    <div class="col-xs-4">
-                        <a href="/game-move?move=4" class="btn btn-default square">&nbsp;</a>
-                    </div>
-                    <div class="col-xs-4">
-                        <a href="/game-move?move=5" class="btn btn-default square">&nbsp;</a>
+                        <a href="/game-move?move=2" class="btn btn-default square">
+                            <i th:if="${#lists.contains(moveList, 2)}" class="fa fa-circle-o" aria-hidden="true"></i>
+                            <i th:if="${#lists.contains(computerMoves, 2)}" class="fa fa-times" aria-hidden="true"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <a href="/game-move?move=6" class="btn btn-default square">&nbsp;</a>
+                        <a href="/game-move?move=3" class="btn btn-default square">
+                            <i th:if="${#lists.contains(moveList, 3)}" class="fa fa-circle-o" aria-hidden="true"></i>
+                            <i th:if="${#lists.contains(computerMoves, 3)}" class="fa fa-times" aria-hidden="true"></i>
+                        </a>
                     </div>
                     <div class="col-xs-4">
-                        <a href="/game-move?move=7" class="btn btn-default square">&nbsp;</a>
+                        <a href="/game-move?move=4" class="btn btn-default square">
+                            <i th:if="${#lists.contains(moveList, 4)}" class="fa fa-circle-o" aria-hidden="true"></i>
+                            <i th:if="${#lists.contains(computerMoves, 4)}" class="fa fa-times" aria-hidden="true"></i>
+                        </a>
                     </div>
                     <div class="col-xs-4">
-                        <a href="/game-move?move=8" class="btn btn-default square">&nbsp;</a>
+                        <a href="/game-move?move=5" class="btn btn-default square">
+                            <i th:if="${#lists.contains(moveList, 5)}" class="fa fa-circle-o" aria-hidden="true"></i>
+                            <i th:if="${#lists.contains(computerMoves, 5)}" class="fa fa-times" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <a href="/game-move?move=6" class="btn btn-default square">
+                            <i th:if="${#lists.contains(moveList, 6)}" class="fa fa-circle-o" aria-hidden="true"></i>
+                            <i th:if="${#lists.contains(computerMoves, 6)}" class="fa fa-times" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    <div class="col-xs-4">
+                        <a href="/game-move?move=7" class="btn btn-default square">
+                            <i th:if="${#lists.contains(moveList, 7)}" class="fa fa-circle-o" aria-hidden="true"></i>
+                            <i th:if="${#lists.contains(computerMoves, 7)}" class="fa fa-times" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    <div class="col-xs-4">
+                        <a href="/game-move?move=8" class="btn btn-default square">
+                            <i th:if="${#lists.contains(moveList, 8)}" class="fa fa-circle-o" aria-hidden="true"></i>
+                            <i th:if="${#lists.contains(computerMoves, 8)}" class="fa fa-times" aria-hidden="true"></i>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -33,7 +33,6 @@ public class GameController {
 
     @GetMapping(value = "/")
     public String welcomeView(@ModelAttribute Player player) {
-        tictactoeGame.populateAvailableFields();
         return "welcome";
     }
 
@@ -57,10 +56,10 @@ public class GameController {
     public String gameMove(@ModelAttribute("player") Player player, @ModelAttribute("move") int move) {
         tictactoeGame.playerMove(move);
         tictactoeGame.computerMove();
-        List<Integer> moveList = tictactoeGame.getPlayerMoveList();
-        List<Integer> computerMoves = tictactoeGame.getComputerMoveList();
-        System.out.println(moveList);
-        System.out.println(computerMoves);
+//        List<Integer> moveList = tictactoeGame.getPlayerMoveList();
+//        List<Integer> computerMoves = tictactoeGame.getComputerMoveList();
+//        System.out.println(moveList);
+//        System.out.println(computerMoves);
         return "redirect:/game";
     }
 }

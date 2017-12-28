@@ -1,9 +1,8 @@
 package funfact.service;
 
-import com.google.gson.JsonObject;
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;

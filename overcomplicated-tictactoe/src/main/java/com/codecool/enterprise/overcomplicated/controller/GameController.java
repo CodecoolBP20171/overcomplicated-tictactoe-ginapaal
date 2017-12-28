@@ -9,11 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -33,11 +31,6 @@ public class GameController {
     public TictactoeGame getGame() {
         return new TictactoeGame();
     }
-
-//    @ModelAttribute("avatar_uri")
-//    public String getAvatarUri() {
-//        return "https://robohash.org/codecool";
-//    }
 
     @GetMapping(value = "/")
     public String welcomeView(@ModelAttribute Player player) {
@@ -62,6 +55,7 @@ public class GameController {
     public String gameMove(@ModelAttribute("player") Player player, @ModelAttribute("move") int move) {
         tictactoeGame.playerMove(move);
         tictactoeGame.computerMove();
+        tictactoeGame.gameState();
         return "redirect:/game";
     }
 

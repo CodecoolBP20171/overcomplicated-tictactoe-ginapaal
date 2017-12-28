@@ -143,4 +143,31 @@ public class TictactoeGame {
         computerMoveList.clear();
         availableFields.clear();
     }
+
+    public String gameState() {
+        List<Character> list = new ArrayList<>(8);
+        for (int i = 0; i < 9; i++) {
+            list.add('-');
+        }
+        List<Integer> allFields = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8);
+
+        for (int num : playerMoveList) {
+            int index = allFields.indexOf(num);
+            list.set(index, '0');
+        }
+        for (int num : computerMoveList) {
+            int index = allFields.indexOf(num);
+            list.set(index, 'X');
+        }
+
+        System.out.println(list);
+        String stringToSend = "";
+
+        for (int i = 0; i < list.size(); i++) {
+            stringToSend += list.get(i);
+        }
+        System.out.println(stringToSend);
+        return stringToSend;
+    }
+
 }

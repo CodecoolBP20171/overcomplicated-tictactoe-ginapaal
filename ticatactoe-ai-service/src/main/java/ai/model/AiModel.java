@@ -5,32 +5,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AiModel {
-
-    String gameState;
-    String uri;
+    int move;
 
     public AiModel() {
 
     }
 
-    public AiModel(String gameState, String uri) {
-        this.gameState = gameState;
-        this.uri = uri;
+    public AiModel(int move) {
+        this.move = move;
     }
 
-    public String getGameState() {
-        return gameState;
+
+    public int getMove() {
+        return move;
     }
 
-    public void setGameState(String gameState) {
-        this.gameState = gameState;
-    }
-
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setMove(int move) {
+        this.move = move;
     }
 }

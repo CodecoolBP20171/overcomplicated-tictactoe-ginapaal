@@ -16,7 +16,7 @@ import java.net.URLConnection;
 public class RemoteURLReader {
 
     public int getMove(String url) throws IOException {
-        System.setProperty("http.agent", "Chrome");
+//        System.setProperty("http.agent", "Chrome");
         StringBuilder stringBuilder = new StringBuilder();
         URL uri = new URL(url);
         URLConnection conn = uri.openConnection();
@@ -26,8 +26,10 @@ public class RemoteURLReader {
             stringBuilder.append(line);
         }
         JSONObject jsonObject = new JSONObject(stringBuilder.toString());
-        String move = (String) jsonObject.get("recommendation");
+        System.out.println(stringBuilder.toString());
+        int move = (Integer) jsonObject.get("recommendation");
+        System.out.println(move);
         reader.close();
-        return Integer.parseInt(move);
+        return move;
     }
 }

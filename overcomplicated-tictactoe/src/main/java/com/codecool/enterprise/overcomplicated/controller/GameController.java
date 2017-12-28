@@ -53,7 +53,6 @@ public class GameController {
     public String gameView(@ModelAttribute("player") Player player, Model model) {
         List<Integer> moveList = tictactoeGame.getPlayerMoveList();
         List<Integer> computerMoves = tictactoeGame.getComputerMoveList();
-        model.addAttribute("comic_uri", "https://imgs.xkcd.com/comics/bad_code.png");
         model.addAttribute("moveList", moveList);
         model.addAttribute("computerMoves", computerMoves);
         return "game";
@@ -91,6 +90,19 @@ public class GameController {
         } catch (ResourceAccessException e) {
             e.getMessage();
             return "https://robohash.org/sly";
+        }
+    }
+
+    @ModelAttribute("comic_uri")
+    public String getComic() {
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:60002/comics", String.class);
+            JsonParser jsonParser = new JacksonJsonParser();
+            System.out.println(response);
+            return (String) jsonParser.parseMap(response.getBody()).get("uri");
+        } catch (Exception e) {
+            return "https://xkcd.com/1794";
         }
     }
     

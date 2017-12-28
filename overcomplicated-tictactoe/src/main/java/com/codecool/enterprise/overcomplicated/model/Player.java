@@ -2,7 +2,6 @@ package com.codecool.enterprise.overcomplicated.model;
 
 import org.springframework.stereotype.Component;
 
-import java.net.URI;
 
 @Component
 public class Player {

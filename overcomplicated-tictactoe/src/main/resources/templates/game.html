@@ -39,7 +39,7 @@
                     <form action="#" th:action="@{/changeplayerusername}" th:object="${player}" method="post">
                         <div class="form-group">
                             <label for="newname">Your new name:</label>
-                            <input type="text" th:field="*{userName}" id="newname" class="form-control input-sm"/>
+                            <input name="name" type="text" th:field="*{userName}" id="newname" class="form-control input-sm"/>
                         </div>
                         <input type="submit" value="Change" class="btn btn-default"/>
                     </form>

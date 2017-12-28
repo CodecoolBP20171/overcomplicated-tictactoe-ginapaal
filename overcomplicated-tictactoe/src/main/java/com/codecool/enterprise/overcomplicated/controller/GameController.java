@@ -4,13 +4,16 @@ import com.codecool.enterprise.overcomplicated.model.Player;
 import com.codecool.enterprise.overcomplicated.model.TictactoeGame;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JacksonJsonParser;
+import org.springframework.boot.json.JsonParser;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -19,6 +22,7 @@ public class GameController {
 
     @Autowired
     TictactoeGame tictactoeGame;
+
 
     @ModelAttribute("player")
     public Player getPlayer() {
@@ -30,10 +34,10 @@ public class GameController {
         return new TictactoeGame();
     }
 
-    @ModelAttribute("avatar_uri")
-    public String getAvatarUri() {
-        return "https://robohash.org/codecool";
-    }
+//    @ModelAttribute("avatar_uri")
+//    public String getAvatarUri() {
+//        return "https://robohash.org/codecool";
+//    }
 
     @GetMapping(value = "/")
     public String welcomeView(@ModelAttribute Player player) {
@@ -59,10 +63,6 @@ public class GameController {
     public String gameMove(@ModelAttribute("player") Player player, @ModelAttribute("move") int move) {
         tictactoeGame.playerMove(move);
         tictactoeGame.computerMove();
-//        List<Integer> moveList = tictactoeGame.getPlayerMoveList();
-//        List<Integer> computerMoves = tictactoeGame.getComputerMoveList();
-//        System.out.println(moveList);
-//        System.out.println(computerMoves);
         return "redirect:/game";
     }
 
@@ -71,11 +71,26 @@ public class GameController {
         try {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:60000/funfact", String.class);
-            JacksonJsonParser jacksonJsonParser = new JacksonJsonParser();
-            return (String) jacksonJsonParser.parseMap(response.getBody()).get("funfact");
+            JsonParser jsonParser = new JacksonJsonParser();
+            return (String) jsonParser.parseMap(response.getBody()).get("funfact");
         } catch (ResourceAccessException e) {
-            System.out.println("Exception catched, " + e);
+            System.out.println("Exception catched, " + e.getMessage());
             return "It's a fun fact, isn't it?";
+        }
+    }
+
+    @ModelAttribute("avatar_uri")
+    public String getAvatarUri(@ModelAttribute Player player) {
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            System.out.println(getPlayer().getUserName());
+            ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:60001/avatar?avatarString=" + player.getUserName(), String.class);
+            JsonParser jsonParser = new JacksonJsonParser();
+            System.out.println(response);
+            return (String) jsonParser.parseMap(response.getBody()).get("uri");
+        } catch (ResourceAccessException e) {
+            e.getMessage();
+            return "https://robohash.org/sly";
         }
     }
     

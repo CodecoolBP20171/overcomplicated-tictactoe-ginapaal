@@ -19,7 +19,7 @@ import java.util.List;
 public class GameController {
 
     @Autowired
-    TictactoeGame tictactoeGame;
+    private TictactoeGame tictactoeGame;
 
 
     @ModelAttribute("player")
@@ -54,9 +54,19 @@ public class GameController {
     @GetMapping(value = "/game-move")
     public String gameMove(@ModelAttribute("player") Player player, @ModelAttribute("move") int move) {
         tictactoeGame.playerMove(move);
-        tictactoeGame.computerMove();
         tictactoeGame.gameState();
-        return "redirect:/game";
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:60003/ai?gameState=" + tictactoeGame.getGameState(), String.class);
+            JsonParser parser = new JacksonJsonParser();
+            int aiMove = (Integer) parser.parseMap(response.getBody()).get("move");
+            tictactoeGame.computerMove(aiMove);
+            return "redirect:/game";
+        } catch(Exception e) {
+            System.out.println("baj van, " + e.getMessage());
+            return "redirect:/game";
+        }
+
     }
 
     @ModelAttribute("funfact")
@@ -99,5 +109,6 @@ public class GameController {
             return "https://xkcd.com/1794";
         }
     }
+
     
 }

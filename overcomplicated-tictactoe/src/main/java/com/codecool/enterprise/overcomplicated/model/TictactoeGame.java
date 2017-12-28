@@ -14,6 +14,7 @@ public class TictactoeGame {
     private boolean won;
     private boolean validMove = true;
     private String winner;
+    private String gameState;
 
     private List<Integer> playerMoveList = new ArrayList<>();
     private List<Integer> computerMoveList = new ArrayList<>();
@@ -55,6 +56,13 @@ public class TictactoeGame {
         this.winner = winner;
     }
 
+    public String getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(String gameState) {
+        this.gameState = gameState;
+    }
 
     public void checkWin() {
         List<Integer> case1 = Arrays.asList(0, 1, 2); //row 1
@@ -111,20 +119,12 @@ public class TictactoeGame {
 
     public void playerMove(int move) {
         move(move, playerMoveList);
-        System.out.println(player.userName + "moved " + move);
+        System.out.println(player.userName + " moved " + move);
     }
 
-    public void computerMove() {
-        Random random = new Random();
-        int index = random.nextInt(availableFields.size());
-        int move = availableFields.get(index);
-        if (checkIfMoveIsValid(move)) {
-            move(move, computerMoveList);
-            System.out.println("Computer moved " + move);
-        } else {
-            System.out.println("move is not valid");
-        }
-
+    public void computerMove(int move) {
+       move(move, computerMoveList);
+        System.out.println("Computer moved " + move);
     }
 
 
@@ -144,7 +144,7 @@ public class TictactoeGame {
         availableFields.clear();
     }
 
-    public String gameState() {
+    public void gameState() {
         List<Character> list = new ArrayList<>(8);
         for (int i = 0; i < 9; i++) {
             list.add('-');
@@ -153,21 +153,19 @@ public class TictactoeGame {
 
         for (int num : playerMoveList) {
             int index = allFields.indexOf(num);
-            list.set(index, '0');
+            list.set(index, 'O');
         }
         for (int num : computerMoveList) {
             int index = allFields.indexOf(num);
             list.set(index, 'X');
         }
 
-        System.out.println(list);
         String stringToSend = "";
 
         for (int i = 0; i < list.size(); i++) {
             stringToSend += list.get(i);
         }
-        System.out.println(stringToSend);
-        return stringToSend;
+        setGameState(stringToSend);
     }
 
 }
